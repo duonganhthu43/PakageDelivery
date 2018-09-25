@@ -1,12 +1,11 @@
 import * as React from 'react'
 import { Component } from 'react'
-import { AppRegistry, Image, StyleSheet, Text, View } from 'react-native'
+import { AppRegistry, Image, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
 import MyStatusBar from './common/statusbar'
+import MapComponent from './app/Map/ui/mapComponent'
+import TaskListComponent from './app/TaskList/TaskListComponent'
 
-export interface Props { }
-export interface State { }
-
-export class App extends Component<any, State> {
+export class App extends Component<any, any> {
   render() {
     const positionMarker = require('@images/PositionMarker.png')
 
@@ -17,13 +16,50 @@ export class App extends Component<any, State> {
           <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>Dashboard</Text>
         </View>
         <View style={[styles.header, { backgroundColor: '#1C3147' }]} >
-          <View style={{flexDirection: 'row'}}>
-            <Image source={positionMarker}></Image>
+          <View style={{
+            flexDirection: 'row', justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            <Image style={{ marginRight: 10 }} source={positionMarker}></Image>
             <Text style={{ color: 'white', fontSize: 17 }}> Current Position</Text>
           </View>
         </View>
-        <View style={{ flex: 3, backgroundColor: 'skyblue' }} />
-        <View style={{ flex: 1, backgroundColor: 'steelblue' }} />
+        <View style={{ flex: 3, backgroundColor: 'skyblue' }} >
+          <MapComponent></MapComponent>
+        </View>
+        <View style={{ flex: 2, backgroundColor: 'white' }} >
+          <ScrollView style={{ flex: 2 }}>
+            <TaskListComponent></TaskListComponent>
+          </ScrollView>
+          <View style={{
+            backgroundColor: 'white',
+            height: 50,
+            borderColor: '#4CD964',
+            borderWidth: 1,
+            borderRadius: 25,
+            margin: 5,
+            flexDirection: 'row'
+          }}>
+            <TouchableOpacity style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingHorizontal: 10,
+              borderRadius: 25,
+              backgroundColor: '#4CD964'
+            }}>
+              <Text style={{ fontSize: 16, color: 'white' }}>Assignment</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingHorizontal: 10
+            }}>
+              <Text style={{fontSize: 16, color: '#4CD964' }} >JobQueue</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     )
   }

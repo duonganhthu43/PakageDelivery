@@ -4,7 +4,6 @@ export default class MyStatusBar extends React.Component<StatusBarProps, any> {
   constructor(props) {
     super(props)
   }
-    // tslint:disable-next-line:ter-indent
     render() {
       return (
             <View style={{ height: (Platform.OS === 'ios') ? 20 : 0 }}>
