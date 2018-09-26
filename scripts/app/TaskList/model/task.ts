@@ -13,4 +13,5 @@ export interface TaskDetail {
     address: string
     name: string
     distanceValue: number
+    type: string
 }

@@ -7,10 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { State } from '../../../core';
-export class TasksState extends State {
-    constructor(storeEvent, _assignedTasksSource) {
+import ImmutableSet from '../../common/dataStructure/immutableSet';
+export class JobState extends State {
+    constructor(storeEvent, _lstJobSource) {
         super(storeEvent);
-        this._assignedTasksSource = _assignedTasksSource;
+        this._lstJobSource = _lstJobSource;
+        this._lstJobs = new ImmutableSet((item) => item.id, []);
     }
     onLoad(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -19,11 +21,12 @@ export class TasksState extends State {
     }
     onSave(_) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this._assignedTasks;
+            return this._lstJobs;
         });
     }
-    updateAssinedTask(data) {
-        this._assignedTasksSource.next(this._assignedTasks = data);
+    updateJobs(data) {
+        console.log('updateJobsddd', data);
+        this._lstJobSource.next(new ImmutableSet((item) => item.id, data));
     }
 }
-//# sourceMappingURL=tasksState.js.map
+//# sourceMappingURL=jobState.js.map

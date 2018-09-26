@@ -5,13 +5,10 @@ import { TasksState } from './tasksState'
 import { TaskDetail } from '../model/task'
 
 export class TasksStore extends Store<TasksState> {
-    private readonly _assignedTaskSource: BehaviorSubject<[TaskDetail]> = new BehaviorSubject(undefined)
-    public readonly assignedTaskObservable: Observable<[TaskDetail]> = this._assignedTaskSource.asObservable()
-
-    private readonly _unAssignedTaskSource: BehaviorSubject<[TaskDetail]> = new BehaviorSubject(undefined)
-    public readonly unAssignedTaskObservable: Observable<[TaskDetail]> = this._unAssignedTaskSource.asObservable()
+    private readonly _assignedTaskSource: BehaviorSubject<TaskDetail[]> = new BehaviorSubject([])
+    public readonly assignedTaskObservable: Observable<TaskDetail[]> = this._assignedTaskSource.asObservable()
 
     protected onCreateState(storeEvent: StoreEvent): TasksState {
-        return new TasksState(storeEvent, this._assignedTaskSource, this._unAssignedTaskSource)
+        return new TasksState(storeEvent, this._assignedTaskSource)
     }
 }

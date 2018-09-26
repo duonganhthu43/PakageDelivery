@@ -4,7 +4,7 @@ import { MapStore } from '../store/mapStore'
 import RequestHelper from '../../common/utilities/requestHelper'
 import { urlsHelper } from '../../common/urlsHelper'
 import Position from '../model/postion'
-import GetNearByLocationAction from './getNearByLocation'
+import GenerateJobAction from '../../JobList/action/generateJobAction'
 
 export default class GetCurrentPositon extends Action<MapState> {
     protected getStore(): Store<MapState> {
@@ -14,11 +14,12 @@ export default class GetCurrentPositon extends Action<MapState> {
     public async execute(state: MapState): Promise<any> {
         let result = await RequestHelper.get(`${urlsHelper.Google.Place.Domain}${urlsHelper.Google.Place.SearchPlace}`,
             {
-                input: '308c Dien Bien Phu, VietNam',
+                input: 'Bitexco, VietNam',
                 inputtype: 'textquery',
                 fields: 'formatted_address,geometry,place_id',
                 key: urlsHelper.Google.Key
             })
+            console.log('GetCurrentPositon ', result)
 
         const latDelta = Number(result.candidates[0].geometry.viewport.northeast.lat) - Number(result.candidates[0].geometry.viewport.southwest.lat)
         const lngDelta = Number(result.candidates[0].geometry.viewport.northeast.lng) - Number(result.candidates[0].geometry.viewport.southwest.lng)
@@ -30,7 +31,8 @@ export default class GetCurrentPositon extends Action<MapState> {
             address: result.candidates[0].formatted_address,
             place_id: result.candidates[0].place_id
         }
+        console.log('updateCurrentPosition ', position)
         state.updateCurrentPosition(position)
-        new GetNearByLocationAction(position).start()
+        new GenerateJobAction(position).start()
     }
 }

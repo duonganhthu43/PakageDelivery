@@ -3,12 +3,10 @@ import { BehaviorSubject } from 'rxjs'
 import { TaskDetail } from '../model/task'
 
 export class TasksState extends State {
-    private _assignedTasks: [TaskDetail]
-    private _unAssignedTasks: [TaskDetail]
+    private _assignedTasks: TaskDetail[]
 
     constructor(storeEvent: StoreEvent,
-        private readonly _assignedTasksSource: BehaviorSubject<[TaskDetail]>,
-        private readonly _unAssignedTasksSource: BehaviorSubject<[TaskDetail]>,
+        private readonly _assignedTasksSource: BehaviorSubject<TaskDetail[]>
     ) {
         super(storeEvent)
     }
@@ -21,12 +19,7 @@ export class TasksState extends State {
         return this._assignedTasks
     }
 
-    public updateAssinedTask(data: [TaskDetail] ) {
-        console.log( 'updateAssinedTask ', data)
+    public updateAssinedTask(data: TaskDetail[] ) {
         this._assignedTasksSource.next(this._assignedTasks = data)
-    }
-
-    public updateUnAssinedTask(data: [TaskDetail] ) {
-        this._unAssignedTasksSource.next(this._unAssignedTasks = data)
     }
 }

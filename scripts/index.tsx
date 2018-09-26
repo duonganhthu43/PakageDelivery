@@ -7,12 +7,27 @@ import { StoreFactory } from './core'
 import { MapStore } from './app/Map/store/mapStore'
 import MyStatusBar from './app/common/statusbar'
 import { TasksStore } from './app/TaskList/store/tasksStore'
+import { JobStore } from './app/JobList/store/jobStore'
+import ComponentBase from './app/common/componentBase'
+import { SubscriberInfo } from './app/common/dataStructure/subscriberInfo'
+import UpdateTaskListAction from './app/JobList/action/updateTaskListAction'
 
 StoreFactory.registerNoDispose(
+  JobStore,
   MapStore,
   TasksStore
 )
-export class App extends Component<any, any> {
+export class App extends  ComponentBase<any, any> {
+  protected onSubscribe(): SubscriberInfo<any, any>[] {
+    return [
+      new SubscriberInfo<any, any>(
+          StoreFactory.get(JobStore).jobLst, (prev, processingJob) => {
+              console.log('PEDFSFSD ', processingJob)
+              new UpdateTaskListAction(processingJob).start()
+              return this.state
+          })
+  ]
+  }
   render() {
     const positionMarker = require('@images/PositionMarker.png')
     return (

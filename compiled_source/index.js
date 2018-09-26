@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Component } from 'react';
 import { AppRegistry, Image, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import MapComponent from './app/Map/ui/mapComponent';
 import TaskListComponent from './app/TaskList/TaskListComponent';
@@ -7,8 +6,21 @@ import { StoreFactory } from './core';
 import { MapStore } from './app/Map/store/mapStore';
 import MyStatusBar from './app/common/statusbar';
 import { TasksStore } from './app/TaskList/store/tasksStore';
-StoreFactory.registerNoDispose(MapStore, TasksStore);
-export class App extends Component {
+import { JobStore } from './app/JobList/store/jobStore';
+import ComponentBase from './app/common/componentBase';
+import { SubscriberInfo } from './app/common/dataStructure/subscriberInfo';
+import UpdateTaskListAction from './app/JobList/action/updateTaskListAction';
+StoreFactory.registerNoDispose(JobStore, MapStore, TasksStore);
+export class App extends ComponentBase {
+    onSubscribe() {
+        return [
+            new SubscriberInfo(StoreFactory.get(JobStore).jobLst, (prev, processingJob) => {
+                console.log('PEDFSFSD ', processingJob);
+                new UpdateTaskListAction(processingJob).start();
+                return this.state;
+            })
+        ];
+    }
     render() {
         const positionMarker = require('@images/PositionMarker.png');
         return (React.createElement(View, { style: { flex: 1, flexDirection: 'column', backgroundColor: '#243B53' } },

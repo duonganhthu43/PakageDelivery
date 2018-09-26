@@ -50,9 +50,9 @@ export default class GetNearByLocationAction extends Action<TasksState> {
         })
         let combinedData = this.zip([arrayId, destinationAddress, destinationName, destinationInfo, arrayPosition])
 
-        let combinedData2: [TaskDetail] = combinedData.map(e => {
+        let combinedData2: TaskDetail[] = combinedData.map(e => {
             const task: Task = {
-                title: 'Pickup at ' + e[2],
+                title: e[2],
                 distanceText: e[3].distance.text + ' from your location',
                 durationText: e[3].duration.text + ' without traffic',
                 placeId: e[0]
@@ -65,8 +65,9 @@ export default class GetNearByLocationAction extends Action<TasksState> {
                 distanceValue: (Math.round((e[3].distance.value / 1000) * 10)) / 10
             }
         })
-        state.updateAssinedTask(combinedData2)
+        //state.updateAssinedTask(combinedData2)
         console.log('Combined data ', combinedData2)
+        return combinedData2
 
     }
     private zip(arrays) {
