@@ -1,31 +1,37 @@
-import React, { Component } from 'react';
+import React from 'react';
 import MapView from 'react-native-maps';
-export default class MapComponent extends Component {
+import { StoreFactory } from '../../../core';
+import { MapStore } from '../store/mapStore';
+import GetCurrentPositon from '../actions/getCurrentPosition';
+import ComponentBase from '../../common/componentBase';
+import { SubscriberInfo } from '../../common/dataStructure/subscriberInfo';
+export default class MapComponent extends ComponentBase {
     constructor(props) {
         super(props);
         this.state = {
-            latitude: null,
-            longitude: null,
-            error: null,
-        };
-    }
-    componentDidMount() {
-        navigator.geolocation.getCurrentPosition((position) => {
-            console.log(position);
-            this.setState({
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-                error: null,
-            });
-        }, (error) => this.setState({ error: error.message }), { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 });
-    }
-    render() {
-        return (React.createElement(MapView, { style: { flex: 1 }, initialRegion: {
+            currentPosition: {
                 latitude: 37.78825,
                 longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-            } }, !!this.state.latitude && !!this.state.longitude && React.createElement(MapView.Marker, { coordinate: { 'latitude': this.state.latitude, 'longitude': this.state.longitude }, title: 'Current Location' })));
+                latitudeDelta: 0,
+                longitudeDelta: 0,
+            }
+        };
+    }
+    componentWillMount() {
+        super.componentWillMount();
+        this.startAction(new GetCurrentPositon());
+    }
+    onSubscribe() {
+        return [
+            new SubscriberInfo(StoreFactory.get(MapStore).currentPostion, (prev, position) => {
+                console.log('current location 2 ', position);
+                return Object.assign({}, prev, { currentPosition: position });
+            })
+        ];
+    }
+    render() {
+        console.log('render ', this.state.currentPosition);
+        return (React.createElement(MapView, { style: { flex: 1 }, initialRegion: this.state.currentPosition, region: this.state.currentPosition }, !!this.state.currentPosition.latitude && !!this.state.currentPosition.longitude && React.createElement(MapView.Marker, { coordinate: { 'latitude': this.state.currentPosition.latitude, 'longitude': this.state.currentPosition.longitude }, title: this.state.currentPosition.address })));
     }
 }
 //# sourceMappingURL=mapComponent.js.map

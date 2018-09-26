@@ -1,61 +1,58 @@
 
-import React, { Component } from 'react'
+import React from 'react'
 import MapView from 'react-native-maps'
-import { View } from 'react-native'
-
-// interface Region {
-//     latitude: number
-//     longitude: number
-//     latitudeDelta: number
-//     longitudeDelta: number
-// }
-
+import { StoreFactory } from '../../../core'
+import { MapStore } from '../store/mapStore'
+import Position from '../model/postion'
+import GetCurrentPositon from '../actions/getCurrentPosition'
+import ComponentBase from '../../common/componentBase'
+import { SubscriberInfo } from '../../common/dataStructure/subscriberInfo'
 interface State {
-    latitude: number
-    longitude: number
-    error: string
+    currentPosition: Position
 }
 
-export default class MapComponent extends Component<any, State> {
+export default class MapComponent extends ComponentBase<any, State> {
+
     constructor(props) {
         super(props)
         this.state = {
-            latitude: null,
-            longitude: null,
-            error: null,
+            currentPosition: {
+                    latitude: 37.78825,
+                    longitude: -122.4324,
+                    latitudeDelta: 0,
+                    longitudeDelta: 0,
+                }
         }
     }
-    componentDidMount() {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                console.log(position)
-                this.setState({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                    error: null,
+
+    componentWillMount() {
+        super.componentWillMount()
+        this.startAction(new GetCurrentPositon())
+    }
+
+    protected onSubscribe(): SubscriberInfo<any, State>[] {
+        return [
+            new SubscriberInfo<Position, State>(
+                StoreFactory.get(MapStore).currentPostion, (prev, position) => {
+                    console.log('current location 2 ', position)
+                    return { ...prev, currentPosition: position }
                 })
-            },
-            (error) => this.setState({ error: error.message }),
-            { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
-        )
+        ]
     }
 
     render() {
+        console.log('render ', this.state.currentPosition)
         return (
-                <MapView
-                    style={{ flex: 1 }}
-                    initialRegion={{
-                        latitude: 37.78825,
-                        longitude: -122.4324,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,
-                    }}
-                >
-                    {!!this.state.latitude && !!this.state.longitude && <MapView.Marker
-                        coordinate={{ 'latitude': this.state.latitude, 'longitude': this.state.longitude }}
-                        title={'Current Location'}
-                    />}
-                </MapView>
-            )
+            <MapView
+                style={{ flex: 1 }}
+                initialRegion={this.state.currentPosition}
+                region={this.state.currentPosition}
+            >
+                {!!this.state.currentPosition.latitude && !!this.state.currentPosition.longitude && <MapView.Marker
+                    coordinate={{ 'latitude': this.state.currentPosition.latitude, 'longitude': this.state.currentPosition.longitude }}
+                    title={this.state.currentPosition.address}
+                />}
+            </MapView>
+        )
     }
 }

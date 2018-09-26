@@ -9,13 +9,14 @@
         "lint": "tslint scripts/**/*.ts",
         "tsc": "tsc",
         "clean": "rimraf compiled_code",
-        "build": "npm run clean && npm run tsc --",
-        "version": "./npm-version/version-ios.sh"
+        "build": "npm run clean && npm run tsc --"
     },
     "dependencies": {
         "react": "16.5.0",
         "react-native": "0.57.1",
-        "react-native-maps": "^0.21.0"
+        "react-native-maps": "^0.21.0",
+        "rxjs": "^6.3.3",
+        "rxjs-compat": "^6.3.3"
     },
     "devDependencies": {
         "@types/react": "^16.4.14",

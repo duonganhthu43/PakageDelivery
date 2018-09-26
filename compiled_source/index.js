@@ -1,9 +1,13 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { AppRegistry, Image, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
-import MyStatusBar from './common/statusbar';
 import MapComponent from './app/Map/ui/mapComponent';
 import TaskListComponent from './app/TaskList/TaskListComponent';
+import { StoreFactory } from './core';
+import { MapStore } from './app/Map/store/mapStore';
+import MyStatusBar from './app/common/statusbar';
+import { TasksStore } from './app/TaskList/store/tasksStore';
+StoreFactory.registerNoDispose(MapStore, TasksStore);
 export class App extends Component {
     render() {
         const positionMarker = require('@images/PositionMarker.png');
