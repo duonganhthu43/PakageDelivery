@@ -24,6 +24,7 @@ export class TasksState extends State {
         });
     }
     updateAssinedTask(data) {
+        console.log('updateAssinedTask ', data);
         this._assignedTasksSource.next(this._assignedTasks = data);
     }
     updateUnAssinedTask(data) {

@@ -12,4 +12,5 @@ export interface TaskDetail {
     position: Postion
     address: string
     name: string
+    distanceValue: number
 }

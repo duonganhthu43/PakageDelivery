@@ -14,6 +14,7 @@ export default class MapComponent extends ComponentBase {
                 longitude: -122.4324,
                 latitudeDelta: 0,
                 longitudeDelta: 0,
+                place_id: 'ddd '
             }
         };
     }
@@ -30,8 +31,24 @@ export default class MapComponent extends ComponentBase {
         ];
     }
     render() {
-        console.log('render ', this.state.currentPosition);
-        return (React.createElement(MapView, { style: { flex: 1 }, initialRegion: this.state.currentPosition, region: this.state.currentPosition }, !!this.state.currentPosition.latitude && !!this.state.currentPosition.longitude && React.createElement(MapView.Marker, { coordinate: { 'latitude': this.state.currentPosition.latitude, 'longitude': this.state.currentPosition.longitude }, title: this.state.currentPosition.address })));
+        const currentPostion = this.state.currentPosition;
+        const initalRegion = {
+            latitude: currentPostion.latitude,
+            longitude: currentPostion.latitude,
+            latitudeDelta: currentPostion.latitudeDelta,
+            longitudeDelta: currentPostion.longitudeDelta
+        };
+        return (React.createElement(MapView, { style: { flex: 1 }, initialRegion: {
+                latitude: currentPostion.latitude,
+                longitude: currentPostion.latitude,
+                latitudeDelta: currentPostion.latitudeDelta,
+                longitudeDelta: currentPostion.longitudeDelta
+            }, region: {
+                latitude: currentPostion.latitude,
+                longitude: currentPostion.latitude,
+                latitudeDelta: currentPostion.latitudeDelta,
+                longitudeDelta: currentPostion.longitudeDelta
+            } }, !!this.state.currentPosition.latitude && !!this.state.currentPosition.longitude && React.createElement(MapView.Marker, { coordinate: { 'latitude': this.state.currentPosition.latitude, 'longitude': this.state.currentPosition.longitude }, title: this.state.currentPosition.address })));
     }
 }
 //# sourceMappingURL=mapComponent.js.map

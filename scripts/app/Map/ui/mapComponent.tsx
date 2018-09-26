@@ -17,11 +17,12 @@ export default class MapComponent extends ComponentBase<any, State> {
         super(props)
         this.state = {
             currentPosition: {
-                    latitude: 37.78825,
-                    longitude: -122.4324,
-                    latitudeDelta: 0,
-                    longitudeDelta: 0,
-                }
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0,
+                longitudeDelta: 0,
+                place_id: 'ddd '
+            }
         }
     }
 
@@ -41,12 +42,29 @@ export default class MapComponent extends ComponentBase<any, State> {
     }
 
     render() {
-        console.log('render ', this.state.currentPosition)
+        const currentPostion = this.state.currentPosition
+        const initalRegion = {
+            latitude: currentPostion.latitude,
+            longitude: currentPostion.latitude,
+            latitudeDelta: currentPostion.latitudeDelta,
+            longitudeDelta: currentPostion.longitudeDelta
+        }
+
         return (
             <MapView
                 style={{ flex: 1 }}
-                initialRegion={this.state.currentPosition}
-                region={this.state.currentPosition}
+                initialRegion={{
+                    latitude: currentPostion.latitude,
+                    longitude: currentPostion.latitude,
+                    latitudeDelta: currentPostion.latitudeDelta,
+                    longitudeDelta: currentPostion.longitudeDelta
+                }}
+                region={{
+                    latitude: currentPostion.latitude,
+                    longitude: currentPostion.latitude,
+                    latitudeDelta: currentPostion.latitudeDelta,
+                    longitudeDelta: currentPostion.longitudeDelta
+                }}
             >
                 {!!this.state.currentPosition.latitude && !!this.state.currentPosition.longitude && <MapView.Marker
                     coordinate={{ 'latitude': this.state.currentPosition.latitude, 'longitude': this.state.currentPosition.longitude }}
