@@ -5,7 +5,8 @@ export const urlsHelper = {
             Domain: 'https://maps.googleapis.com/maps/api/',
             SearchPlace: 'place/findplacefromtext/json',
             NearbySearch: 'place/nearbysearch/json',
-            Distance: 'distancematrix/json'
+            Distance: 'distancematrix/json',
+            Direction: 'api/directions/json'
         }
     }
 }

@@ -6,41 +6,43 @@ import { SubscriberInfo } from '../common/dataStructure/subscriberInfo'
 import { TasksStore } from './store/tasksStore'
 import { StoreFactory } from '../../core'
 import { TaskDetail } from './model/task'
+import UpdateDestinationAction from '../Map/actions/updateDestination';
 
 export default class TaskListComponent extends ComponentBase<any, any> {
+    ds = new ListView.DataSource({ rowHasChanged: (r1: TaskDetail, r2: TaskDetail) => r1.generalInfo.placeId !== r2.generalInfo.placeId });
 
     constructor(props) {
         super(props)
         this.state = {
-            dataSource: []
+            dataSource: this.ds.cloneWithRows([]),
         }
     }
 
-    protected onSubscribe(): SubscriberInfo<[TaskDetail], any>[] {
+    protected onSubscribe(): SubscriberInfo<TaskDetail[], any>[] {
         return [
-            new SubscriberInfo<[TaskDetail], any>(
+            new SubscriberInfo<TaskDetail[], any>(
                 StoreFactory.get(TasksStore).assignedTaskObservable, (prev, taskArray) => {
-                    return { ...prev, dataSource: taskArray }
+                    if (!taskArray || taskArray.length) return this.state
+                    let sortedArray = taskArray.sort((a: TaskDetail, b: TaskDetail) => { return a.distanceValue - b.distanceValue })
+                    new UpdateDestinationAction(sortedArray[0].position).start()
+                    return { ...prev, dataSource: this.ds.cloneWithRows(sortedArray) }
                 })
         ]
     }
     render() {
-        console.log('TaskListComponent render', this.state.dataSource)
         return (
             this.state.dataSource ?
-            <ListView
-                style={{ flex: 1 }}
-                dataSource={this.state.dataSource}
-                renderRow={(rowData) => this.renderRow(rowData)}
-            /> : <View></View>
+                <ListView
+                    style={{ flex: 1 }}
+                    dataSource={this.state.dataSource}
+                    renderRow={(rowData, sectionID, rowID, _) => this.renderRow(rowData, sectionID, rowID, _)}
+                /> : <View></View>
         )
     }
 
-    renderRow = (rowData: TaskDetail) => {
-        console.log('renderRow render', rowData)
-
+    renderRow = (rowData: TaskDetail, sectionID: string | number, rowID: string | number, highlightRow?: boolean) => {
         return (
-            <TaskSumaryComponent title={rowData.generalInfo.title} description={'4.1km from your location'} totalTime={'23 mins without traffic'} isSelected={false}></TaskSumaryComponent>
+            <TaskSumaryComponent title={rowData.generalInfo.title} description={rowData.generalInfo.distanceText} totalTime={rowData.generalInfo.durationText} distance={rowData.distanceValue} isSelected={rowID == 0}></TaskSumaryComponent>
         )
     }
 }

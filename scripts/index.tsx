@@ -17,16 +17,19 @@ StoreFactory.registerNoDispose(
   MapStore,
   TasksStore
 )
-export class App extends  ComponentBase<any, any> {
+export class App extends ComponentBase<any, any> {
   protected onSubscribe(): SubscriberInfo<any, any>[] {
     return [
       new SubscriberInfo<any, any>(
-          StoreFactory.get(JobStore).jobLst, (prev, processingJob) => {
-              console.log('PEDFSFSD ', processingJob)
-              new UpdateTaskListAction(processingJob).start()
-              return this.state
-          })
-  ]
+        StoreFactory.get(JobStore).processingJobs, (prev, processingJob) => {
+          new UpdateTaskListAction(processingJob).start()
+          return this.state
+        }),
+      new SubscriberInfo<any, any>(
+        StoreFactory.get(MapStore).currentAddress, (prev, address) => {
+          return { ...prev, currentAddress: address }
+        })
+    ]
   }
   render() {
     const positionMarker = require('@images/PositionMarker.png')
@@ -42,7 +45,7 @@ export class App extends  ComponentBase<any, any> {
             alignItems: 'center'
           }}>
             <Image style={{ marginRight: 10 }} source={positionMarker}></Image>
-            <Text style={{ color: 'white', fontSize: 17 }}> Current Position</Text>
+            <Text style={{ color: 'white', fontSize: 17 }}>{this.state && this.state.currentAddress}</Text>
           </View>
         </View>
         <View style={{ flex: 3, backgroundColor: 'skyblue' }} >
@@ -77,7 +80,7 @@ export class App extends  ComponentBase<any, any> {
               alignItems: 'center',
               paddingHorizontal: 10
             }}>
-              <Text style={{fontSize: 16, color: '#4CD964' }} >JobQueue</Text>
+              <Text style={{ fontSize: 16, color: '#4CD964' }} >JobQueue</Text>
             </TouchableOpacity>
           </View>
         </View>

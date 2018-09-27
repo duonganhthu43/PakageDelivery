@@ -6,6 +6,7 @@ export interface TaskSumaryProperties {
     description: string
     totalTime: string
     isSelected: boolean
+    distance: number
 }
 export default class TaskSumaryComponent extends Component<TaskSumaryProperties, any> {
 
@@ -26,33 +27,32 @@ export default class TaskSumaryComponent extends Component<TaskSumaryProperties,
                         backgroundColor: '#EEEEEE', justifyContent: 'center',
                         alignItems: 'center', height: 38, width: 38, borderRadius: 19
                     }}>
-                        <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>3.4</Text>
+                        <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 12 }}>{this.props.distance}</Text>
                     </View>
                 </View>
-                <View style={{
+                <View style={[this.props.isSelected ? { borderColor: '#FF9500' } : { borderColor: '#E7E7E7' }, {
                     flex: 4,
                     height: 85,
                     backgroundColor: '#EEEEEE',
                     flexDirection: 'column',
                     alignContent: 'center',
                     justifyContent: 'center',
-                    borderColor: '#E7E7E7',
                     borderWidth: 1,
                     borderRadius: 5,
                     paddingHorizontal: 20,
                     marginRight: 10
-                }}>
+                }]}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{
                             fontWeight: 'bold',
                             fontSize: 15
                         }}>{this.props.title}</Text>
-                        <View style={{
+                        <View style={[{
                             borderColor: '#C7C7C2',
                             borderWidth: 1,
                             alignItems: 'center',
                             justifyContent: 'center', width: 25, height: 25, borderRadius: 12.5
-                        }}>
+                        }, !this.props.isSelected ? { display: 'none' } : null]}>
                             <Image source={positionMarker}></Image>
                         </View>
                     </View>

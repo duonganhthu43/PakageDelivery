@@ -6,24 +6,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export default class RequestHelper {
-    static _getQueryString(params) {
-        if (!params)
-            return '';
-        let queries = [];
-        for (const p in params) {
-            queries.push(`${p}=${encodeURIComponent(params[p])}`);
-        }
-        return '?' + queries.join('&');
+import { Action, StoreFactory } from '../../../core/index';
+import { MapStore } from '../store/mapStore';
+export default class UpdateDestinationAction extends Action {
+    constructor(destination) {
+        super();
+        this.destination = destination;
     }
-    static get(resource, params) {
+    getStore() {
+        return StoreFactory.get(MapStore);
+    }
+    execute(state) {
         return __awaiter(this, void 0, void 0, function* () {
-            const queryString = RequestHelper._getQueryString(params);
-            const result = yield fetch(`${resource}${queryString}`, {
-                method: 'GET'
-            });
-            return result && result.json();
+            state.updateDestinationPosition(this.destination);
         });
     }
 }
-//# sourceMappingURL=requestHelper.js.map
+//# sourceMappingURL=updateDestination.js.map

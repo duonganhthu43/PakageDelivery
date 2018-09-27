@@ -12,8 +12,19 @@ export class MapStore extends Store<MapState> {
         longitudeDelta: 0.0421,
     })
     public readonly currentPostion: Observable<Position> = this._currentPositionSource.asObservable()
+    public readonly currentAddress: Observable<string> = this.currentPostion.map(e => e.address)
+
+
+    private readonly _destinationPositionSource: BehaviorSubject<Position> = new BehaviorSubject({
+        latitude: 35.78825,
+        longitude: -120.4324,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+    })
+    public readonly destinationPostion: Observable<Position> = this._destinationPositionSource.asObservable()
+
 
     protected onCreateState(storeEvent: StoreEvent): MapState {
-        return new MapState(storeEvent, this._currentPositionSource)
+        return new MapState(storeEvent, this._currentPositionSource, this._destinationPositionSource)
     }
 }

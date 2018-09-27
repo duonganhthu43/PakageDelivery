@@ -11,9 +11,17 @@ export class MapStore extends Store {
             longitudeDelta: 0.0421,
         });
         this.currentPostion = this._currentPositionSource.asObservable();
+        this.currentAddress = this.currentPostion.map(e => e.address);
+        this._destinationPositionSource = new BehaviorSubject({
+            latitude: 35.78825,
+            longitude: -120.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+        });
+        this.destinationPostion = this._destinationPositionSource.asObservable();
     }
     onCreateState(storeEvent) {
-        return new MapState(storeEvent, this._currentPositionSource);
+        return new MapState(storeEvent, this._currentPositionSource, this._destinationPositionSource);
     }
 }
 //# sourceMappingURL=mapStore.js.map

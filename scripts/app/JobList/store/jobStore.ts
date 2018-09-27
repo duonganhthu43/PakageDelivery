@@ -12,7 +12,9 @@ export class JobStore extends Store<JobState> {
     public readonly jobByStatus: Observable<{ [status: string]: ImmutableSet<Job> }> =
         this.jobLst.map(jobs => {
             const result: { [status: string]: ImmutableSet<Job> } = {}
-            jobs.forEach(j => { result[j.status].merge(j) })
+            jobs.forEach(j => {
+                result[j.status] = !result[j.status] ? new ImmutableSet<Job>(item => item.id, [j]) : result[j.status].merge(j)
+            })
             return result
         })
 

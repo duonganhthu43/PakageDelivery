@@ -12,9 +12,7 @@ export default class GenerateJobAction extends Action<JobState> {
     }
 
     public async execute(state: JobState): Promise<any> {
-        console.log('GenerateJobAction execute')
         const lstTask = await new GetNearByLocationAction(this.position).start()
-        console.log('GenerateJobAction2 execute', lstTask)
 
         let lstJob: Job[] = []
         // generate 20 job
@@ -23,7 +21,6 @@ export default class GenerateJobAction extends Action<JobState> {
             let deliveryTask = lstTask[this.randomExcluded(0, 19, idx)]
             lstJob.push(new Job('Sample Job ' + idx, pickupTask, deliveryTask, idx < 2 ? 'processing' : 'new'))
         })
-        console.log('lstJob toUpdate', lstJob)
 
         state.updateJobs(lstJob)
     }

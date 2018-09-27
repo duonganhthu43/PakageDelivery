@@ -9,7 +9,9 @@ export class JobStore extends Store {
         this.jobLst = this._jobLstSource.asObservable();
         this.jobByStatus = this.jobLst.map(jobs => {
             const result = {};
-            jobs.forEach(j => { result[j.status].merge(j); });
+            jobs.forEach(j => {
+                result[j.status] = !result[j.status] ? new ImmutableSet(item => item.id, [j]) : result[j.status].merge(j);
+            });
             return result;
         });
         this.newJobs = this.jobByStatus.map(dictionary => {

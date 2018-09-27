@@ -14,10 +14,12 @@ StoreFactory.registerNoDispose(JobStore, MapStore, TasksStore);
 export class App extends ComponentBase {
     onSubscribe() {
         return [
-            new SubscriberInfo(StoreFactory.get(JobStore).jobLst, (prev, processingJob) => {
-                console.log('PEDFSFSD ', processingJob);
+            new SubscriberInfo(StoreFactory.get(JobStore).processingJobs, (prev, processingJob) => {
                 new UpdateTaskListAction(processingJob).start();
                 return this.state;
+            }),
+            new SubscriberInfo(StoreFactory.get(MapStore).currentAddress, (prev, address) => {
+                return Object.assign({}, prev, { currentAddress: address });
             })
         ];
     }
@@ -33,7 +35,7 @@ export class App extends ComponentBase {
                         alignItems: 'center'
                     } },
                     React.createElement(Image, { style: { marginRight: 10 }, source: positionMarker }),
-                    React.createElement(Text, { style: { color: 'white', fontSize: 17 } }, " Current Position"))),
+                    React.createElement(Text, { style: { color: 'white', fontSize: 17 } }, this.state && this.state.currentAddress))),
             React.createElement(View, { style: { flex: 3, backgroundColor: 'skyblue' } },
                 React.createElement(MapComponent, null)),
             React.createElement(View, { style: { flex: 2, backgroundColor: 'white' } },

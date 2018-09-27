@@ -23,7 +23,6 @@ export default class GetCurrentPositon extends Action {
                 fields: 'formatted_address,geometry,place_id',
                 key: urlsHelper.Google.Key
             });
-            console.log('GetCurrentPositon ', result);
             const latDelta = Number(result.candidates[0].geometry.viewport.northeast.lat) - Number(result.candidates[0].geometry.viewport.southwest.lat);
             const lngDelta = Number(result.candidates[0].geometry.viewport.northeast.lng) - Number(result.candidates[0].geometry.viewport.southwest.lng);
             const position = {
@@ -34,7 +33,6 @@ export default class GetCurrentPositon extends Action {
                 address: result.candidates[0].formatted_address,
                 place_id: result.candidates[0].place_id
             };
-            console.log('updateCurrentPosition ', position);
             state.updateCurrentPosition(position);
             new GenerateJobAction(position).start();
         });

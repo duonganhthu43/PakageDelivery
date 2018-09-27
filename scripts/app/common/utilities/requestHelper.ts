@@ -11,7 +11,6 @@ export default class RequestHelper {
 
     static async get(resource: string, params?: any) {
         const queryString = RequestHelper._getQueryString(params)
-        console.log('REQUEAST : ', `${resource}${queryString}`)
         const result = await fetch(`${resource}${queryString}`, {
             method: 'GET'
         })

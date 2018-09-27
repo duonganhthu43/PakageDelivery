@@ -8,9 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { State } from '../../../core';
 export class MapState extends State {
-    constructor(storeEvent, _currentPostionSource) {
+    constructor(storeEvent, _currentPostionSource, _destinationPostionSource, _directionSource) {
         super(storeEvent);
         this._currentPostionSource = _currentPostionSource;
+        this._destinationPostionSource = _destinationPostionSource;
+        this._directionSource = _directionSource;
     }
     onLoad(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -27,6 +29,12 @@ export class MapState extends State {
     }
     updateCurrentPosition(data) {
         this._currentPostionSource.next(this._currentPosition = data);
+    }
+    updateDestinationPosition(data) {
+        this._destinationPostionSource.next(this._destinationPosition = data);
+    }
+    updateDirection(data) {
+        this._directionSource.next(this._direction = data);
     }
 }
 //# sourceMappingURL=MapState.js.map
