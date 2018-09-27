@@ -16,6 +16,7 @@ At one point of time, when having task processing, application show maps and dir
 
 => when new job is assigned , there's a notification to notify driver new task
 => driver could observer the job list of system update in realtime and could pick job by themselves
+
 <img src="https://github.com/duonganhthu43/PakageDelivery/blob/master/new_job_list.png" height="480">
 
 
