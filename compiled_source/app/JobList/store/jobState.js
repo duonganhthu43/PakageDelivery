@@ -25,7 +25,6 @@ export class JobState extends State {
         });
     }
     updateJobs(data) {
-        console.log('updateJobsddd', data);
         this._lstJobSource.next(new ImmutableSet((item) => item.id, data));
     }
 }

@@ -18,6 +18,8 @@ export default class UpdateTaskListAction extends Action {
     }
     execute(state) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (!this.processingJob)
+                return;
             const arrayTask = [];
             this.processingJob.forEach(job => {
                 arrayTask.push(Object.assign({}, job.pickup, { type: 'pickup' }));

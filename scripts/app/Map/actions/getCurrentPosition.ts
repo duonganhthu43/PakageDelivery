@@ -14,7 +14,7 @@ export default class GetCurrentPositon extends Action<MapState> {
     public async execute(state: MapState): Promise<any> {
         let result = await RequestHelper.get(`${urlsHelper.Google.Place.Domain}${urlsHelper.Google.Place.SearchPlace}`,
             {
-                input: 'Bitexco, VietNam',
+                input: 'Neogov, Robot Tower,Ho Chi Minh, VietNam',
                 inputtype: 'textquery',
                 fields: 'formatted_address,geometry,place_id',
                 key: urlsHelper.Google.Key

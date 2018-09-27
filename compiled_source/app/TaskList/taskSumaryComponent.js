@@ -43,7 +43,9 @@ export default class TaskSumaryComponent extends Component {
                             }, !this.props.isSelected ? { display: 'none' } : null] },
                         React.createElement(Image, { source: positionMarker }))),
                 React.createElement(Text, { style: { color: '#9E9E9E', fontSize: 14 } }, this.props.description),
-                React.createElement(Text, { style: { color: '#9E9E9E', fontSize: 12 } }, this.props.totalTime))));
+                React.createElement(View, { style: { flexDirection: 'row', justifyContent: 'space-between' } },
+                    React.createElement(Text, { style: { color: '#9E9E9E', fontSize: 12 } }, this.props.totalTime),
+                    React.createElement(Text, { style: [this.props.type.toUpperCase() === 'PICKUP' ? { color: '#4CD964' } : { color: '#FF9500' }, { fontSize: 12 }] }, this.props.type.toUpperCase())))));
     }
 }
 //# sourceMappingURL=taskSumaryComponent.js.map

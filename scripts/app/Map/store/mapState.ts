@@ -1,18 +1,18 @@
 import { State, StoreEvent } from '../../../core'
 import { BehaviorSubject } from 'rxjs'
 import Position from '../model/postion'
-import { Coordinate } from 'react-native-maps';
+
+export type DirectionCoordinate = { latitude: number; longitude: number; }
 
 export class MapState extends State {
     private _currentPosition: Position
     private _destinationPosition: Position
-    private _direction: Coordinate[]
-
+    private _direction: DirectionCoordinate[]
 
     constructor(storeEvent: StoreEvent,
         private readonly _currentPostionSource: BehaviorSubject<Position>,
         private readonly _destinationPostionSource: BehaviorSubject<Position>,
-        private readonly _directionSource: BehaviorSubject<Coordinate[]>
+        private readonly _directionSource: BehaviorSubject<DirectionCoordinate[]>
     ) {
         super(storeEvent)
     }
@@ -37,7 +37,7 @@ export class MapState extends State {
         this._destinationPostionSource.next(this._destinationPosition = data)
     }
 
-    public updateDirection(data: Coordinate[]) {
+    public updateDirection(data: DirectionCoordinate[]) {
         this._directionSource.next(this._direction = data)
     }
 

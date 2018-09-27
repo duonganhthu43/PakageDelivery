@@ -10,8 +10,9 @@ export default class TaskListComponent extends ComponentBase {
     constructor(props) {
         super(props);
         this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1.generalInfo.placeId !== r2.generalInfo.placeId });
-        this.renderRow = (rowData, sectionID, rowID, highlightRow) => {
-            return (React.createElement(TaskSumaryComponent, { title: rowData.generalInfo.title, description: rowData.generalInfo.distanceText, totalTime: rowData.generalInfo.durationText, distance: rowData.distanceValue, isSelected: rowID == 0 }));
+        this.renderRow = (rowData, sectionID, rowID) => {
+            console.log('rowData', rowData);
+            return (React.createElement(TaskSumaryComponent, { title: rowData.generalInfo.title, description: rowData.generalInfo.distanceText, totalTime: `${rowData.generalInfo.durationText}`, distance: rowData.distanceValue, isSelected: rowID - 1 < 0, type: rowData.type }));
         };
         this.state = {
             dataSource: this.ds.cloneWithRows([]),
@@ -20,7 +21,7 @@ export default class TaskListComponent extends ComponentBase {
     onSubscribe() {
         return [
             new SubscriberInfo(StoreFactory.get(TasksStore).assignedTaskObservable, (prev, taskArray) => {
-                if (!taskArray || taskArray.length)
+                if (!taskArray || taskArray.length < 1)
                     return this.state;
                 let sortedArray = taskArray.sort((a, b) => { return a.distanceValue - b.distanceValue; });
                 new UpdateDestinationAction(sortedArray[0].position).start();
@@ -30,7 +31,7 @@ export default class TaskListComponent extends ComponentBase {
     }
     render() {
         return (this.state.dataSource ?
-            React.createElement(ListView, { style: { flex: 1 }, dataSource: this.state.dataSource, renderRow: (rowData, sectionID, rowID, _) => this.renderRow(rowData, sectionID, rowID, _) }) : React.createElement(View, null));
+            React.createElement(ListView, { style: { flex: 1 }, dataSource: this.state.dataSource, renderRow: (rowData, sectionID, rowID) => this.renderRow(rowData, sectionID, rowID), enableEmptySections: true }) : React.createElement(View, null));
     }
 }
 //# sourceMappingURL=TaskListComponent.js.map

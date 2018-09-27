@@ -18,7 +18,7 @@ export default class GetCurrentPositon extends Action {
     execute(state) {
         return __awaiter(this, void 0, void 0, function* () {
             let result = yield RequestHelper.get(`${urlsHelper.Google.Place.Domain}${urlsHelper.Google.Place.SearchPlace}`, {
-                input: 'Bitexco, VietNam',
+                input: 'Neogov, Robot Tower,Ho Chi Minh, VietNam',
                 inputtype: 'textquery',
                 fields: 'formatted_address,geometry,place_id',
                 key: urlsHelper.Google.Key

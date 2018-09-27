@@ -59,14 +59,12 @@ export default class GetNearByLocationAction extends Action<TasksState> {
             }
             return {
                 generalInfo: task,
-                position: e[4],
+                position: { ...e[4], name: e[2], address: e[1] },
                 address: e[1],
                 name: e[2],
                 distanceValue: (Math.round((e[3].distance.value / 1000) * 10)) / 10
             }
         })
-        //state.updateAssinedTask(combinedData2)
-        console.log('Combined data ', combinedData2)
         return combinedData2
 
     }

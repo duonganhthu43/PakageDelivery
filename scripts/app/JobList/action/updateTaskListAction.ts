@@ -13,10 +13,11 @@ export default class UpdateTaskListAction extends Action<TasksState> {
     }
 
     public async execute(state: TasksState): Promise<any> {
+        if (!this.processingJob) return
         const arrayTask: TaskDetail[] = []
         this.processingJob.forEach(job => {
-            arrayTask.push({...job.pickup, type: 'pickup'})
-            arrayTask.push({...job.delivery, type: 'delivery'})
+            arrayTask.push({ ...job.pickup, type: 'pickup' })
+            arrayTask.push({ ...job.delivery, type: 'delivery' })
         })
         state.updateAssinedTask(arrayTask)
     }

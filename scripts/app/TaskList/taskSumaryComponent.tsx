@@ -7,7 +7,9 @@ export interface TaskSumaryProperties {
     totalTime: string
     isSelected: boolean
     distance: number
+    type: string
 }
+
 export default class TaskSumaryComponent extends Component<TaskSumaryProperties, any> {
 
     constructor(props) {
@@ -57,7 +59,11 @@ export default class TaskSumaryComponent extends Component<TaskSumaryProperties,
                         </View>
                     </View>
                     <Text style={{ color: '#9E9E9E', fontSize: 14 }}>{this.props.description}</Text>
-                    <Text style={{ color: '#9E9E9E', fontSize: 12 }} >{this.props.totalTime}</Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={{ color: '#9E9E9E', fontSize: 12 }} >{this.props.totalTime}</Text>
+                        <Text style={[this.props.type.toUpperCase() === 'PICKUP' ? { color: '#4CD964' } : { color: '#FF9500' }, { fontSize: 12 }]} >{this.props.type.toUpperCase()}</Text>
+
+                    </View>
                 </View>
             </View>)
     }

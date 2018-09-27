@@ -6,7 +6,7 @@ export const urlsHelper = {
             SearchPlace: 'place/findplacefromtext/json',
             NearbySearch: 'place/nearbysearch/json',
             Distance: 'distancematrix/json',
-            Direction: 'api/directions/json'
+            Direction: 'directions/json'
         }
     }
 }
