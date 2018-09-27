@@ -33,4 +33,7 @@ In terminal, type:
 * Npm install
 * tsc
 * react-native run-ios
+For real devices, 
+* react-native bundle --entry-file='compiled_source/index.js' --bundle-output='./ios/PackageDelivery/main.jsbundle' --dev=true  --platform='ios' --assets-dest='./ios'
+
 
