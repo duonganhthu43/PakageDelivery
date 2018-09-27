@@ -11,7 +11,7 @@ export interface TaskDetail {
     generalInfo: Task
     position: Postion
     address: string
-    name2: string
+    name: string
     distanceValue: number
     type: string
 }

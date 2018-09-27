@@ -35,10 +35,11 @@ export default class MapComponent extends ComponentBase {
                 new GetDirectionAction(data[0], data[1]).start();
             }),
             new SubscriberInfo(StoreFactory.get(MapStore).direction, (prev, coordinates) => {
-                this.mapRef.fitToCoordinates(coordinates, {
-                    edgePadding: { top: 50, right: 50, bottom: 120, left: 50 },
-                    animated: true
-                });
+                if (this.mapRef)
+                    this.mapRef.fitToCoordinates(coordinates, {
+                        edgePadding: { top: 50, right: 50, bottom: 120, left: 50 },
+                        animated: true
+                    });
                 return Object.assign({}, prev, { direction: coordinates });
             })
         ];

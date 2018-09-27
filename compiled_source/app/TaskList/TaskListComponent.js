@@ -11,7 +11,6 @@ export default class TaskListComponent extends ComponentBase {
         super(props);
         this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1.generalInfo.placeId !== r2.generalInfo.placeId });
         this.renderRow = (rowData, sectionID, rowID) => {
-            console.log('rowData', rowData);
             return (React.createElement(TaskSumaryComponent, { title: rowData.generalInfo.title, description: rowData.generalInfo.distanceText, totalTime: `${rowData.generalInfo.durationText}`, distance: rowData.distanceValue, isSelected: rowID - 1 < 0, type: rowData.type }));
         };
         this.state = {

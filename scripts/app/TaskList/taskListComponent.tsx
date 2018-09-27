@@ -43,7 +43,6 @@ export default class TaskListComponent extends ComponentBase<any, any> {
     }
 
     renderRow = (rowData: TaskDetail, sectionID: string | number, rowID: any) => {
-        console.log('rowData', rowData)
         return (
             <TaskSumaryComponent title={rowData.generalInfo.title} description={rowData.generalInfo.distanceText} totalTime={`${rowData.generalInfo.durationText}`}
                 distance={rowData.distanceValue} isSelected={rowID - 1 < 0} type={rowData.type}></TaskSumaryComponent>

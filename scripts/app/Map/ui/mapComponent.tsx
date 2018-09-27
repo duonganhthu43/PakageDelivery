@@ -36,7 +36,6 @@ export default class MapComponent extends ComponentBase<any, State> {
 
     protected onSubscribe(): SubscriberInfo<any, State>[] {
         let source = Observable.combineLatest(StoreFactory.get(MapStore).currentPostion, StoreFactory.get(MapStore).destinationPostion).filter((data) => { return data[0] && data[1] && true })
-
         return [
             new SubscriberInfo<Position, State>(
                 StoreFactory.get(MapStore).currentPostion, (prev, position) => {
@@ -51,10 +50,11 @@ export default class MapComponent extends ComponentBase<any, State> {
             }),
             new SubscriberInfo<DirectionCoordinate[], State>(
                 StoreFactory.get(MapStore).direction, (prev, coordinates) => {
-                    this.mapRef.fitToCoordinates(coordinates, {
-                        edgePadding: { top: 50, right: 50, bottom: 120, left: 50 },
-                        animated: true
-                    })
+                    if (this.mapRef)
+                        this.mapRef.fitToCoordinates(coordinates, {
+                            edgePadding: { top: 50, right: 50, bottom: 120, left: 50 },
+                            animated: true
+                        })
                     return { ...prev, direction: coordinates }
                 })
         ]

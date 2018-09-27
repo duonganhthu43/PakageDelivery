@@ -31,7 +31,8 @@ export default class GetCurrentPositon extends Action {
                 latitudeDelta: latDelta,
                 longitudeDelta: lngDelta,
                 address: result.candidates[0].formatted_address,
-                place_id: result.candidates[0].place_id
+                place_id: result.candidates[0].place_id,
+                name: 'Robot Tower'
             };
             state.updateCurrentPosition(position);
             new GenerateJobAction(position).start();

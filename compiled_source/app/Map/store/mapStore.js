@@ -18,7 +18,7 @@ export class MapStore extends Store {
             longitudeDelta: 0.0421,
         });
         this.currentPostion = this._currentPositionSource.asObservable();
-        this.currentAddress = this.destinationPostion.map(e => e.name);
+        this.currentAddress = this.currentPostion.map(e => e.name);
         this._directionSource = new BehaviorSubject([]);
         this.direction = this._directionSource.asObservable();
     }

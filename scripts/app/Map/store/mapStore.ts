@@ -20,7 +20,7 @@ export class MapStore extends Store<MapState> {
         longitudeDelta: 0.0421,
     })
     public readonly currentPostion: Observable<Position> = this._currentPositionSource.asObservable()
-    public readonly currentAddress: Observable<string> = this.destinationPostion.map(e => e.name)
+    public readonly currentAddress: Observable<string> = this.currentPostion.map(e => e.name)
 
     private readonly _directionSource: BehaviorSubject<DirectionCoordinate[]> = new BehaviorSubject([])
     public readonly direction: Observable<DirectionCoordinate[]> = this._directionSource.asObservable()

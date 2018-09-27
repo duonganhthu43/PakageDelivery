@@ -62,7 +62,6 @@ export default class TaskSumaryComponent extends Component<TaskSumaryProperties,
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ color: '#9E9E9E', fontSize: 12 }} >{this.props.totalTime}</Text>
                         <Text style={[this.props.type.toUpperCase() === 'PICKUP' ? { color: '#4CD964' } : { color: '#FF9500' }, { fontSize: 12 }]} >{this.props.type.toUpperCase()}</Text>
-
                     </View>
                 </View>
             </View>)
