@@ -1,5 +1,5 @@
 # PakageDelivery
-This project is just prototype for demonstration idea only and not full function as describe
+This project is just prototype for demonstration idea only and not full functional as describe
 
 ## Description
 In one working day, there's a lot of orders.
@@ -15,7 +15,7 @@ At one point of time, when having task processing, application show maps and dir
 <img src="https://github.com/duonganhthu43/PakageDelivery/blob/master/processing_tasks.png" height="480">
 
 => when new job is assigned , there's a notification to notify driver new task
-=> driver could observer the job list of system update in realtime and could pick job by themselves
+=> driver could observe the job list of system update in realtime and could pick job by themselves
 
 <img src="https://github.com/duonganhthu43/PakageDelivery/blob/master/new_job_list.png" height="480">
 
@@ -33,7 +33,8 @@ In terminal, type:
 * Npm install
 * tsc
 * react-native run-ios
-For real devices, 
+
+=> For real devices, 
 * react-native bundle --entry-file='compiled_source/index.js' --bundle-output='./ios/PackageDelivery/main.jsbundle' --dev=true  --platform='ios' --assets-dest='./ios'
 
 
